@@ -12,9 +12,10 @@ Start-Process "${Platform.resolvedExecutable}" `
     exit(0); // يقفل التطبيق الأصلي
   } else if (Platform.isLinux || Platform.isMacOS) {
     final script =
-        'exec sudo "${Platform.resolvedExecutable}" "${Platform.script.toFilePath()}"';
+     'exec sudo "${Platform.resolvedExecutable}" "${Platform.script.toFilePath()}"';
     await Process.run('bash', ['-c', script]);
-    exit(0); // يقفل التطبيق الأصلي
+    exit(0); 
+    // يقفل التطبيق الأصلي
   }
   return false;
 }
