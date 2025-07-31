@@ -37,7 +37,6 @@ class _OverlayWrapperState extends State<OverlayWrapper> {
           }
         } else {
           // إذا كان المستخدم لديه صلاحيات المسؤول، نعرض الشاشة الرئيسية
-
           ScreenRecorderBlocker.startMonitoring(context);
         }
       }
