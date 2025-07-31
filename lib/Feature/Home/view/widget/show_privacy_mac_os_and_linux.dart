@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../main.dart';
 
-Future<bool> showPrivacyDialogWindows() async {
+Future<bool> showPrivacyDialogMacOsAndLinux( ) async {
   final context = navigatorKey.currentContext;
   if (context == null) return false;
 
@@ -11,7 +11,7 @@ Future<bool> showPrivacyDialogWindows() async {
     builder: (context) => AlertDialog(
       title: Text('الخصوصية'),
       content: Text(
-        'لحماية الخصوصية Administrato هذا التطبيق يحتاج إلى صلاحيات-\nهل توافق على إعادة تشغيل التطبيق بصلاحيات المسؤول؟',
+        '.لتفعيل بعض الوظائف مثل منع تسجيل الشاشة sudo من فضلك شغل البرنامج باستخدام',
         style: TextStyle(fontSize: 16),
         textAlign: TextAlign.start,
       ),

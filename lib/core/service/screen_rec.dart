@@ -8,20 +8,25 @@ import '../../Feature/Home/view/screen/overlay_entry_black_screen.dart';
 //بيظهر شاشة سودا لو اكتشف ان تطبيق بيسجل
 class ScreenRecorderBlocker {
   static final List<String> nameOfRecorderApp = [
+    'obs',
     'obs64',
-    'bdcam', // Bandicam
-    'camtasiaStudio', // Camtasia
+    'obs32',
+    'quicktime',
+    'bdcam',
+    'camtasia',
     'screenrec',
-    'snagit32', // Snagit
-    'gamebar', // Xbox Game Bar
+    'snagit',
+    'gamebar',
     'flashbackrecorder',
-    'apowerrec', // Apowersoft
+    'apowerrec',
     'icecream',
     'screenflow',
     'debut',
     'loom',
     'screencast',
     'recordit',
+    'kazam',
+    'simplescreenrecorder',
   ];
 
   // OverlayEntry لعرض الشاشة السوداء
@@ -46,11 +51,18 @@ class ScreenRecorderBlocker {
   }
 
   static Future<bool> _isScreenRecorderRunning() async {
+    ProcessResult result;
     // استخدام PowerShell للحصول على قائمة العمليات
-    final result = await Process.run('powershell', [
-      '-Command',
-      'Get-Process | Select-Object Name',
-    ]);
+    if (Platform.isWindows) {
+      result = await Process.run('powershell', [
+        '-Command',
+        'Get-Process | Select-Object Name',
+      ]);
+    } else if (Platform.isLinux || Platform.isMacOS) {
+      result = await Process.run('ps', ['aux']);
+    } else {
+      return false; // لا ندعم أنظمة تشغيل أخرى
+    }
     // التحقق من وجود أي من تطبيقات تسجيل الشاشة في قائمة العمليات
     if (result.stdout == null) return false;
     for (String name in nameOfRecorderApp) {
