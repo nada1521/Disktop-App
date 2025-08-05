@@ -9,7 +9,7 @@ class WindowOptionFunction {
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.hidden,
-      title: 'Flutter Desktop App',
+      title: 'Easy t3lim App',
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.setPreventClose(true);

@@ -1,12 +1,11 @@
 import 'dart:io';
+import 'package:desktop_app/Feature/Auth/SignIn/view/screen/sign_in_screen.dart';
 import 'package:desktop_app/main.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/function/is_running_as_admin.dart';
-import '../../../../core/function/relaunch_as_admin.dart';
-import '../../../../core/service/screen_rec.dart';
+import '../../../../core/service/screen_record_blocker.dart';
 import '../widget/show_privacy_dialog.dart';
 import '../widget/show_privacy_mac_os_and_linux.dart';
-import 'home_screen.dart';
 
 class OverlayWrapper extends StatefulWidget {
   const OverlayWrapper({super.key});
@@ -25,16 +24,18 @@ class _OverlayWrapperState extends State<OverlayWrapper> {
         if (!isAdmin) {
           bool userAgreed = false;
           if (Platform.isWindows) {
-           userAgreed= await showPrivacyDialogWindows();
-          }else if (Platform.isMacOS || Platform.isLinux) {
+            userAgreed = await showPrivacyDialogWindows();
+          } else if (Platform.isMacOS || Platform.isLinux) {
             userAgreed = await showPrivacyDialogMacOsAndLinux();
           }
 
-          if (userAgreed) {
-            relaunchAsAdmin();
-          } else {
+          if (!userAgreed) {
+            // relaunchAsAdmin();
             exit(0);
           }
+          // else {
+
+          // }
         } else {
           // إذا كان المستخدم لديه صلاحيات المسؤول، نعرض الشاشة الرئيسية
           ScreenRecorderBlocker.startMonitoring(context);
@@ -46,6 +47,6 @@ class _OverlayWrapperState extends State<OverlayWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return HomePage();
+    return SignInScreen();
   }
 }
