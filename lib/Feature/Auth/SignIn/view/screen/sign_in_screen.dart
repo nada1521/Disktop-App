@@ -1,53 +1,19 @@
+import 'package:desktop_app/Feature/Auth/SignIn/data/repos/login_repo.dart';
+import 'package:desktop_app/Feature/Auth/SignIn/logic/log_in_cubit.dart';
+import 'package:desktop_app/Feature/Auth/SignIn/view/widgets/sign_in_form_widget.dart';
+import 'package:desktop_app/core/service/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Sign In',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                const SizedBox(height: 32),
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                  ),
-                  obscureText: true,
-                ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Handle sign in logic
-                    },
-                    child: const Text('Sign In'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return BlocProvider(
+      create: (context) => LogInCubit(getIt.get<LoginRepo>()),
+      child: Scaffold(body: SignInFormWidget()),
     );
   }
 }

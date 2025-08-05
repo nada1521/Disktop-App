@@ -3,8 +3,7 @@ import 'package:desktop_app/Feature/Auth/SignIn/view/screen/sign_in_screen.dart'
 import 'package:desktop_app/main.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/function/is_running_as_admin.dart';
-import '../../../../core/function/relaunch_as_admin.dart';
-import '../../../../core/service/screen_rec.dart';
+import '../../../../core/service/screen_record_blocker.dart';
 import '../widget/show_privacy_dialog.dart';
 import '../widget/show_privacy_mac_os_and_linux.dart';
 
@@ -30,11 +29,13 @@ class _OverlayWrapperState extends State<OverlayWrapper> {
             userAgreed = await showPrivacyDialogMacOsAndLinux();
           }
 
-          if (userAgreed) {
-            relaunchAsAdmin();
-          } else {
+          if (!userAgreed) {
+            // relaunchAsAdmin();
             exit(0);
           }
+          // else {
+
+          // }
         } else {
           // إذا كان المستخدم لديه صلاحيات المسؤول، نعرض الشاشة الرئيسية
           ScreenRecorderBlocker.startMonitoring(context);
