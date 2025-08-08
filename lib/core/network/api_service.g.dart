@@ -20,7 +20,7 @@ class _ApiService implements ApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<LogInResponseModel> login(String email, String password) async {
+  Future<LoginResponseModel> login(String email, String password) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'email': email,
@@ -28,7 +28,7 @@ class _ApiService implements ApiService {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<LogInResponseModel>(
+    final _options = _setStreamType<LoginResponseModel>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -39,9 +39,9 @@ class _ApiService implements ApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late LogInResponseModel _value;
+    late LoginResponseModel _value;
     try {
-      _value = LogInResponseModel.fromJson(_result.data!);
+      _value = LoginResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -50,12 +50,12 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<LogInResponseModel> home(String authToken) async {
+  Future<LoginResponseModel> home(String authToken) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'auth_token': authToken};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<LogInResponseModel>(
+    final _options = _setStreamType<LoginResponseModel>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -66,9 +66,54 @@ class _ApiService implements ApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late LogInResponseModel _value;
+    late LoginResponseModel _value;
     try {
-      _value = LogInResponseModel.fromJson(_result.data!);
+      _value = LoginResponseModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<SignUpResponseModel> signUp(
+    String email,
+    String firstName,
+    String lastName,
+    String password,
+    String deviceId,
+    String udid,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('email', email));
+    _data.fields.add(MapEntry('first_name', firstName));
+    _data.fields.add(MapEntry('last_name', lastName));
+    _data.fields.add(MapEntry('password', password));
+    _data.fields.add(MapEntry('deviceid', deviceId));
+    _data.fields.add(MapEntry('udid', udid));
+    final _options = _setStreamType<SignUpResponseModel>(
+      Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'multipart/form-data',
+          )
+          .compose(
+            _dio.options,
+            '/api/signup',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SignUpResponseModel _value;
+    try {
+      _value = SignUpResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

@@ -9,13 +9,13 @@ class LoginRepo {
   final ApiService apiService;
 
   LoginRepo({required this.apiService});
-  Future<ApiResult<LogInResponseModel>> login(
-    LoginRequestBody requestBody,
+  Future<ApiResult<LoginResponseModel>> login(
+    LoginRequestBody loginRequestBody,
   ) async {
     try {
       final response = await apiService.login(
-        requestBody.email,
-        requestBody.password
+        loginRequestBody.email,
+        loginRequestBody.password,
       );
       return ApiResult.success(response);
     } catch (e) {

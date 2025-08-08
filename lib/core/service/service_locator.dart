@@ -1,4 +1,5 @@
 import 'package:desktop_app/Feature/Auth/SignIn/data/repos/login_repo.dart';
+import 'package:desktop_app/Feature/Auth/SignUp/data/repos/sign_up_repo.dart';
 import 'package:desktop_app/core/network/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -20,5 +21,8 @@ void setupGetIt() async {
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
   getIt.registerLazySingleton<LoginRepo>(
     () => LoginRepo(apiService: getIt.get<ApiService>()),
+  );
+  getIt.registerLazySingleton<SignUpRepo>(
+    () => SignUpRepo(apiService: getIt.get<ApiService>()),
   );
 }

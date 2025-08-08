@@ -3,8 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppSharedPrefs {
   static  SharedPreferences? _prefs;
 
-  /// يجب استدعاء هذا الميثود قبل استخدام أي ميثود تانية
-  static Future<void> init() async {
+   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
   }
 

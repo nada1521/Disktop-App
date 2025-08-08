@@ -7,5 +7,6 @@ part of 'home_request_body.dart';
 // **************************************************************************
 
 
+
 Map<String, dynamic> _$HomeRequestBodyToJson(HomeRequestBody instance) =>
     <String, dynamic>{'token': instance.token};

@@ -8,7 +8,7 @@ class HomeInitialState extends HomeState {}
 class HomeLoadingState extends HomeState {}
 
 class HomeSuccessState extends HomeState {
-  final LogInResponseModel respons;
+  final LoginResponseModel respons;
 
   HomeSuccessState({required this.respons});
 }
@@ -17,5 +17,4 @@ class HomeFailureState extends HomeState {
   final String error;
 
   HomeFailureState({required this.error});
-
 }
