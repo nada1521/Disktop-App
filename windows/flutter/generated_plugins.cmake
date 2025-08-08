@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  platform_device_id_windows
   screen_retriever_windows
   webview_windows
   window_manager

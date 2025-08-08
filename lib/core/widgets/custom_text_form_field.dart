@@ -19,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
     this.color,
     this.inputFormatters,
     this.prefixIcon,
+    this.readOnly,  this.errorText,
   });
   final String? hintText;
   final IconData? prefixIcon;
@@ -34,6 +35,8 @@ class CustomTextFormField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final List<TextInputFormatter>? inputFormatters;
   final Color? color;
+  final bool? readOnly;
+  final String? errorText;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,30 +45,30 @@ class CustomTextFormField extends StatelessWidget {
         autovalidateMode: autovalidateMode,
         onChanged: onChanged,
         textCapitalization: textCapitalization ?? TextCapitalization.none,
-        // style: TextStyle(fontSize: 21, color: color ?? Colors.white),
         validator:
             validator ??
             (value) {
               if (value!.isEmpty) {
-                return 'هذا الحقل مطلوب';
+                return 'This field is required';
               }
               return null;
             },
+
+        readOnly: readOnly ?? false,
         inputFormatters: inputFormatters,
         textAlign: textAlig,
         keyboardType: kebordType,
         textInputAction: TextInputAction.next,
         controller: controller,
-        // style: TextStyle(color:),
         obscureText: obscureText,
         decoration: InputDecoration(
           fillColor: AppColors.grey,
           filled: true,
+          errorText: errorText,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(color: Colors.transparent),
-
-             ),
+          ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.transparent),
             borderRadius: BorderRadius.circular(12),
@@ -73,7 +76,7 @@ class CustomTextFormField extends StatelessWidget {
           enabled: true,
           label: title,
           hintText: hintText,
-          // hintStyle: AppTextStyle.regularFontSize14Greay,
+
           prefixIcon: Icon(prefixIcon),
           suffixIcon: suffixIcon,
           border: OutlineInputBorder(borderRadius: BorderRadius.zero),

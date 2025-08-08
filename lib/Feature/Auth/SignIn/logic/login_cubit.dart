@@ -7,10 +7,11 @@ import 'package:desktop_app/core/helper/shared_pref.dart';
 import 'package:desktop_app/core/network/api_result.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/helper/token_encryptor.dart';
 part 'log_in_state.dart';
 
-class LogInCubit extends Cubit<LogInState> {
-  LogInCubit(this.loginRepo) : super(LogInInitialState());
+class LoginCubit extends Cubit<LogInState> {
+  LoginCubit(this.loginRepo) : super(LogInInitialState());
   final LoginRepo loginRepo;
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -35,8 +36,17 @@ class LogInCubit extends Cubit<LogInState> {
       );
     }
   }
+
+  @override
+  Future<void> close() {
+    emailController.dispose();
+    passwordController.dispose();
+    return super.close();
+  }
 }
 
 Future<void> saveUserToken(String token) async {
-  await AppSharedPrefs.setString(ShardPrefKeys.userToken, token);
+    final encrypted = TokenEncryptor.encryptToken(token);
+
+  await AppSharedPrefs.setString(ShardPrefKeys.userToken, encrypted);
 }

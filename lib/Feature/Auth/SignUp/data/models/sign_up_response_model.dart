@@ -4,15 +4,13 @@ part 'sign_up_response_model.g.dart';
 
 @JsonSerializable()
 class SignUpResponseModel {
-  final String message;
-  final UserData user;
+  final int status;
+  final bool validity;
+  @JsonKey(name: 'auth_token')
   final String token;
+  final String message;
 
-  SignUpResponseModel({
-    required this.message,
-    required this.user,
-    required this.token,
-  });
+  SignUpResponseModel( {required this.validity, required this.status,required this.token, required this.message});
 
   factory SignUpResponseModel.fromJson(Map<String, dynamic> json) =>
       _$SignUpResponseModelFromJson(json);
@@ -20,19 +18,3 @@ class SignUpResponseModel {
   Map<String, dynamic> toJson() => _$SignUpResponseModelToJson(this);
 }
 
-@JsonSerializable()
-class UserData {
-  final String name;
-  final String email;
-  final String role;
-
-  UserData({
-    required this.name,
-    required this.email,
-    required this.role,
-  });
-
-  factory UserData.fromJson(Map<String, dynamic> json) => _$UserDataFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserDataToJson(this);
-}

@@ -1,76 +1,111 @@
-import 'package:desktop_app/Feature/Auth/SignIn/view/widgets/dont_have_an_account_signup.dart';
+import 'package:desktop_app/Feature/Auth/SignUp/data/models/get_device_udid.dart';
+import 'package:desktop_app/Feature/Auth/SignUp/logic/sign_up_cubit.dart';
+import 'package:desktop_app/Feature/Auth/SignUp/view/widgets/already_have_an_accunt_sign_in.dart';
 import 'package:desktop_app/core/helper/spacing.dart';
 import 'package:desktop_app/core/utils/app_text_style.dart';
-import 'package:desktop_app/core/widgets/custom_button.dart';
 import 'package:desktop_app/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/widgets/align_left_text.dart';
+import 'signup_button_state.dart';
 
-class SignUpFormWidget extends StatelessWidget {
+class SignUpFormWidget extends StatefulWidget {
   const SignUpFormWidget({super.key});
 
   @override
+  State<SignUpFormWidget> createState() => _SignUpFormWidgetState();
+}
+
+class _SignUpFormWidgetState extends State<SignUpFormWidget> {
+  late bool obscure = true;
+  void obsecureState() {
+    setState(() {
+      obscure = !obscure;
+    });
+  }
+
+  IconData checkIconPassword() {
+    return obscure == true ? Icons.visibility_off : Icons.visibility;
+  }
+
+  @override
+  void initState() {
+    getDeviceUDID().then((value) {
+      if (!mounted) return;
+      SignUpCubit signUpCubit = context.read<SignUpCubit>();
+      signUpCubit.deviceidIDController.text = value;
+      signUpCubit.udIDController.text = value;
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    SignUpCubit signUpCubit = context.read<SignUpCubit>();
     return Form(
+      key: signUpCubit.signUpFormKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Column(
           children: [
-            verticalSpace(70),
+            verticalSpace(30),
             Text(
               'Sign Up',
               style: AppTextStyle.fontWeightw500Size16Colorblack(),
             ),
-            verticalSpace(30),
-            Align(alignment: Alignment.bottomLeft, child: Text('First Name')),
-
+            verticalSpace(10),
+            AlignLeftText(text: 'First Name'),
             CustomTextFormField(
               hintText: 'first name',
+              controller: signUpCubit.firstNameController,
               prefixIcon: Icons.person,
               color: Colors.grey,
             ),
-            verticalSpace(10),
-            Align(alignment: Alignment.bottomLeft, child: Text('Last Name')),
 
+            AlignLeftText(text: 'Last Name'),
             CustomTextFormField(
               hintText: 'last name',
-              prefixIcon: Icons.email_outlined,
+              controller: signUpCubit.lastNameController,
+              prefixIcon: Icons.person,
               color: Colors.grey,
             ),
-            verticalSpace(10),
-            Align(alignment: Alignment.bottomLeft, child: Text('Email')),
-
+            AlignLeftText(text: 'Email'),
             CustomTextFormField(
               hintText: 'Email',
+              controller: signUpCubit.emailController,
               prefixIcon: Icons.email_outlined,
               color: Colors.grey,
             ),
-            verticalSpace(10),
-            Align(alignment: Alignment.bottomLeft, child: Text('Password')),
-
+            AlignLeftText(text: 'Password'),
             CustomTextFormField(
-              obscureText: true,
+              obscureText: obscure,
               hintText: 'password',
+              controller: signUpCubit.passwordController,
               prefixIcon: Icons.lock_outlined,
               suffixIcon: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.visibility_off),
+                onPressed: () {
+                  obsecureState();
+                },
+                icon: Icon(checkIconPassword()),
               ),
             ),
-            verticalSpace(10),
-            Align(
-              alignment: Alignment.topRight,
-              child: Text('Forget Password?'),
+            AlignLeftText(text: 'Deviceid ID'),
+            CustomTextFormField(
+              controller: signUpCubit.deviceidIDController,
+              // readOnly: true,
+              prefixIcon: Icons.perm_device_information,
+            ),
+            AlignLeftText(text: 'UDID'),
+            CustomTextFormField(
+              controller: signUpCubit.udIDController,
+              // readOnly: true,
+              prefixIcon: Icons.vpn_key,
             ),
             verticalSpace(20),
-            CustomButton(
-              onPressed: () {},
-              title: Text(
-                'Sign In',
-                style: AppTextStyle.fontWeightw400Size18ColorWhite(),
-              ),
-            ),
-            verticalSpace(40),
-            DontHaveAnAccountSignUp(),
+            SignUpButtonState(),
+            verticalSpace(20),
+            AlreadyHaveAnAccuntSignInText(),
+            verticalSpace(20),
           ],
         ),
       ),

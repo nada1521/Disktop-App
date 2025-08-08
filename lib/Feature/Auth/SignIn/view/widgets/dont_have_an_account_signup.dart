@@ -11,11 +11,9 @@ class DontHaveAnAccountSignUp extends StatelessWidget {
     return Text.rich(
       TextSpan(
         text: "Don't have an account? ",
-        // style: AppTextStyle.regularFontSize12Grey,
         children: [
           TextSpan(
             text: "Sign Up",
-            // style: AppTextStyle.mediumFontSize12Orang,
             recognizer: TapGestureRecognizer()
               ..onTap = () => pushReplacement(context, SignUpScreen()),
           ),

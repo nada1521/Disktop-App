@@ -1,3 +1,5 @@
+import 'package:desktop_app/Feature/Auth/SignIn/view/screen/login_screen.dart';
+import 'package:desktop_app/core/helper/navigation/navigation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +14,8 @@ class AlreadyHaveAnAccuntSignInText extends StatelessWidget {
         children: [
           TextSpan(
             text: "Sign In",
-              recognizer: TapGestureRecognizer()
-              ..onTap = (){}
+            recognizer: TapGestureRecognizer()
+              ..onTap = () => pushReplacement(context, LoginScreen()),
           ),
         ],
       ),

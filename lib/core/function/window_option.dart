@@ -13,7 +13,7 @@ class WindowOptionFunction {
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.setPreventClose(true);
-      await windowManager.setFullScreen(true);
+        await windowManager.setFullScreen(true);
       await windowManager.show();
       await windowManager.focus();
     });

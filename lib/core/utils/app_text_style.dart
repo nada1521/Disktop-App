@@ -14,4 +14,14 @@ abstract class AppTextStyle {
     fontWeight: FontWeight.w500,
     color: AppColors.white,
   );
+   static TextStyle fontWeightW600FontSize18wight = TextStyle(
+    fontSize: 14,
+    color: AppColors.white,
+    fontWeight: FontWeight.w600,
+  );
+    static TextStyle fontWeightBoldFontSize14Greay = TextStyle(
+    fontSize: 14,
+    color: AppColors.grey,
+    fontWeight: FontWeight.bold,
+  );
 }
